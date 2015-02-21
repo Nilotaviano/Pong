@@ -1,9 +1,10 @@
 #include "InputHandler.h"
+#include <stdio.h>
 
 InputHandler::InputHandler(void)
 {
-	for(int i = 0 ; i < KEYBOARD_SIZE ; i++) {
-		keyboard[i] = false;
+	for (int i = 0; i < KEYBOARD_SIZE; i++) {
+		keys_[i] = false;
 	}
 }
 
@@ -17,7 +18,7 @@ void InputHandler::handleInput(SDL_Event event, bool *quit)
 	{
 	case SDL_KEYUP:
 	case SDL_KEYDOWN:
-		handleKey(event.key);
+		handleKeyboard(event.key);
 		break;
 	case SDL_MOUSEMOTION:
 		break;
@@ -30,26 +31,28 @@ void InputHandler::handleInput(SDL_Event event, bool *quit)
 	}
 }
 
-void InputHandler::handleKey(SDL_KeyboardEvent kbEvent) {
+void InputHandler::handleKeyboard(SDL_KeyboardEvent kbEvent)
+{
 	int key = kbEvent.keysym.sym;
 
-	if(key < KEYBOARD_SIZE) {
+	if (key < KEYBOARD_SIZE) {
 		switch (kbEvent.type){
 		case SDL_KEYUP:
-			keyboard[kbEvent.keysym.sym] = false;
+			keys_[kbEvent.keysym.sym] = false;
 			break;
 		case SDL_KEYDOWN:
-			keyboard[kbEvent.keysym.sym] = true;
+			keys_[kbEvent.keysym.sym] = true;
 			break;
 		}
 	}
 }
 
-void InputHandler::updateBar(Bar *bar) {
-	if(keyboard[SDLK_a]) {
-		(*bar).moveLeft();
-	}
-	if(keyboard[SDLK_d]) {
-		(*bar).moveRight();
+bool InputHandler::isKeyPressed(SDL_Keycode key)
+{
+	if (key < KEYBOARD_SIZE) {
+		return keys_[key];
+	} 
+	else {
+		return false;
 	}
 }

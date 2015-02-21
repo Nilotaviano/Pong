@@ -2,7 +2,7 @@
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
 #include <stdio.h>
-#include "game.h"
+#include "Game.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -121,19 +121,6 @@ void close()
 
 int main(int argc, char* args[])
 {
-	//Start up SDL and create window
-	if (!init())
-	{
-		printf("Failed to initialize!\n");
-	}
-	else
-	{
-		//While application is running
-		while (Game::Game().play(gWindow));
-	}
-
-	//Free resources and close SDL
-	close();
-
+	Game::Game().run();
 	return 0;
 }

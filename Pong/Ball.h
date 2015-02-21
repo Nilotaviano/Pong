@@ -3,14 +3,14 @@
 #include <math.h>
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
-#include "GameState.h"
+#include "EnumGamePlayState.h"
 
 class Ball
 {
 public:
 	Ball(void);
 	~Ball(void);
-	GameState move(void);
+	GamePlayState move(void);
 	void draw();
 	void detectCollision(Bar bar);
 private:

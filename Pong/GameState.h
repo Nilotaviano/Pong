@@ -1,3 +1,18 @@
 #pragma once
 
-enum class GameState{PLAYER1_WINS, PLAYER2_WINS, NOT_OVER };
+#include "InputHandler.h"
+
+class StateManager;
+
+class GameState
+{
+public:
+	GameState(StateManager* pManager);
+	~GameState();
+	virtual void render() {}
+	virtual void update(InputHandler inputHandler) {}
+	void changeState(GameState* pNewGameState);
+
+private :
+	StateManager* pStateManager_;
+};

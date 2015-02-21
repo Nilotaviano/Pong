@@ -15,25 +15,25 @@ Ball::~Ball(void)
 {
 }
 
-GameState Ball::move(void)
+GamePlayState Ball::move(void)
 {
 	xPos_ += xSpd_;
 	yPos_ += ySpd_;
 
 	//Checks if the ball is out of bounds on the X axis
-	if(!(xPos_ - RADIUS > -1 && xPos_ + RADIUS < 1))
+	if (!(xPos_ - RADIUS > -1 && xPos_ + RADIUS < 1))
 	{
 		xSpd_ = -xSpd_;	//Speed along X axis is inverted
 	}
 
-	if(yPos_ + RADIUS >= 1) {
-		return GameState::PLAYER1_WINS;
+	if (yPos_ + RADIUS >= 1) {
+		return GamePlayState::PLAYER1_WINS;
 	}
-	else if(yPos_ - RADIUS <= -1) {
-		GameState::PLAYER2_WINS;
+	else if (yPos_ - RADIUS <= -1) {
+		GamePlayState::PLAYER2_WINS;
 	}
 	else {
-		return GameState::NOT_OVER;
+		return GamePlayState::NOT_OVER;
 	}
 }
 
@@ -45,15 +45,15 @@ void Ball::setSpeed(float newXSpeed, float newYSpeed) {
 		newXSpeed = newXSpeed >= 0 ? MIN_SPEED_EACH_AXIS : -MIN_SPEED_EACH_AXIS;
 	}
 	if (abs(newYSpeed) < MIN_SPEED_EACH_AXIS) {
-		newYSpeed = newYSpeed >= 0? MIN_SPEED_EACH_AXIS : -MIN_SPEED_EACH_AXIS;
+		newYSpeed = newYSpeed >= 0 ? MIN_SPEED_EACH_AXIS : -MIN_SPEED_EACH_AXIS;
 	}
 
 	totalSpeed = sqrt(pow(newXSpeed, 2) + pow(newYSpeed, 2));
 
-	if(totalSpeed > MAX_SPEED)
+	if (totalSpeed > MAX_SPEED)
 	{
-		float cosDelta = newXSpeed/totalSpeed;
-		float sinDelta = newYSpeed/totalSpeed;
+		float cosDelta = newXSpeed / totalSpeed;
+		float sinDelta = newYSpeed / totalSpeed;
 		xSpd_ = MAX_SPEED * cosDelta;
 		ySpd_ = MAX_SPEED * sinDelta;
 	}
@@ -68,13 +68,12 @@ void Ball::draw() {
 	int triangleAmount = 25; //# of triangles used to draw circle
 	GLfloat twicePi = 2.0f * 3.1415926f;
 
-
 	glBegin(GL_TRIANGLE_FAN);
 	glColor3f(1, 0, 0);
 	glVertex2d(xPos_, yPos_); // center of circle
-	for(int i = 0; i <= triangleAmount;i++) { 
+	for (int i = 0; i <= triangleAmount; i++) {
 		glVertex2d(
-			xPos_ + (RADIUS * cos(i *  twicePi / triangleAmount)), 
+			xPos_ + (RADIUS * cos(i *  twicePi / triangleAmount)),
 			yPos_ + (RADIUS * sin(i * twicePi / triangleAmount))
 			);
 	}
@@ -95,44 +94,41 @@ void Ball::detectCollision(Bar bar) {
 	ballY1 = this->yPos_ - RADIUS;
 	ballY2 = this->yPos_ + RADIUS;
 
-	//Ball's sides are between the bar's left and right sides
-	if(ballX1 > barX1 && ballX2 < barX2) {
-		//Collision on top or bottom of the bar
-		if((ballY1 > barY1 && ballY1 < barY2) ||
-			(ballY2 > barY1 && ballY2 < barY2)) 
-		{
-			this->ySpd_ = -this->ySpd_;
-		}
+	//Ball hit the top or bottom of a bar
+	if ((ballX1 > barX1 && ballX2 < barX2) &&
+		((ballY1 > barY1 && ballY1 < barY2) ||
+		(ballY2 > barY1 && ballY2 < barY2))) 
+	{
+		this->ySpd_ = -this->ySpd_;
 		return;
 	}
 
-	//Ball's top and bottom are between the bar's top and bottom
-	if(ballY1 > barY1 && ballY2 < barY2) {
-		//Collision on the left or right side of the bar
-		if((ballX2 > barX1 && ballX2 < barX2) ||
-			(ballX1 < barX2 && ballX1 > barX1)) 
-		{
-			this->xSpd_ = -this->xSpd_;
-		}
+	//Ball hit one side of a bar
+	if ((ballY1 > barY1 && ballY2 < barY2) &&
+		((ballX2 > barX1 && ballX2 < barX2) ||
+		(ballX1 < barX2 && ballX1 > barX1))) 
+	{
+		this->xSpd_ = -this->xSpd_;
 		return;
 	}
+
 	//TODO fix this:
 	//Corner (This will treat the ball as a RADIUS x RADIUS square)
-	if(((ballX1 < barX1 && ballX2 > barX1) ||
+	if (((ballX1 < barX1 && ballX2 > barX1) ||
 		(ballX1 < barX2 && ballX2 > barX2)) &&
 		((ballY1 < barY1 && ballY2 > barY1) ||
 		(ballY1 < barY2 && ballX2 > barY2)))
 	{
-		if(ballX1 < barX1 && ballX2 > barX1) {//Corner on the left
-			if(xSpd_ < 0) {
+		if (ballX1 < barX1 && ballX2 > barX1) {//Corner on the left
+			if (xSpd_ < 0) {
 				setSpeed(xSpd_ * 1.5f, -ySpd_ * 0.8f);
 			}
 			else {
 				setSpeed(-xSpd_ * 0.8f, -ySpd_ * 0.8f);
 			}
 		}
-		else if(ballX1 < barX2 && ballX2 > barX2) {//Corner on the right
-			if(xSpd_ > 0) {
+		else if (ballX1 < barX2 && ballX2 > barX2) {//Corner on the right
+			if (xSpd_ > 0) {
 				setSpeed(xSpd_ * 1.5f, -ySpd_ * 0.8f);
 			}
 			else {

@@ -1,23 +1,24 @@
 #pragma once
-#include "Ball.h"
-#include "Bar.h"
-#include "InputHandler.h"
-#include "GameState.h"
 
+#include "StateManager.h"
+#include <SDL.h>
 
 class Game
 {
 public:
 	Game();
 	~Game();
-	bool play(SDL_Window* gWindow);
-private:
-	Ball ball;
-	Bar bar1;
-	Bar bar2;
-	bool quit;
-	InputHandler inputHandler;
-	GameState update(); //Per frame update
+	void update();
 	void render();
+	void run();
+private:
+	bool init();
+	bool initGL();
+	void close();
+	const int SCREEN_WIDTH;
+	const int SCREEN_HEIGHT;
+	SDL_Window* pSdlWindow_;
+	StateManager* pStateManager_;
+	InputHandler inputHandler_;
+	bool quit;
 };
-
