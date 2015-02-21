@@ -13,8 +13,8 @@ const float Bar::STEP = 0.00025f;
 Bar::Bar(float xPosition, float yPosition)
 {
 	const float STEP = 0.00075f;
-	xPos = xPosition;
-	yPos = yPosition;
+	xPos_ = xPosition;
+	yPos_ = yPosition;
 }
 
 
@@ -26,8 +26,8 @@ Bar::~Bar(void)
 void Bar::moveLeft(void)
 {
 	//Can't go out of the screen
-	if(xPos > -1 + HALF_WIDTH) {
-		xPos -= STEP;
+	if(xPos_ > -1 + HALF_WIDTH) {
+		xPos_ -= STEP;
 	}
 }
 
@@ -35,25 +35,25 @@ void Bar::moveLeft(void)
 void Bar::moveRight(void)
 {
 	//Can't go out of the screen
-	if(xPos < 1 - HALF_WIDTH) {
-		xPos += STEP;
+	if(xPos_ < 1 - HALF_WIDTH) {
+		xPos_ += STEP;
 	}
 }
 
 void Bar::draw(void) {
 	glColor3f(0, 0, 1);
 	glRectd(
-		(xPos + -HALF_WIDTH),
-		(yPos + -HALF_HEIGHT),
-		(xPos + HALF_WIDTH),
-		(yPos + HALF_HEIGHT)
+		(xPos_ + -HALF_WIDTH),
+		(yPos_ + -HALF_HEIGHT),
+		(xPos_ + HALF_WIDTH),
+		(yPos_ + HALF_HEIGHT)
 		);
 }
 
 float Bar::getX() {
-	return xPos;
+	return xPos_;
 }
 
 float Bar::getY() {
-	return yPos;
+	return yPos_;
 }

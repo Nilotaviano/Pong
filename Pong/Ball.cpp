@@ -1,12 +1,13 @@
 #include "Ball.h"
 
 const float Ball::MAX_SPEED = 0.00005f;
+const float Ball::MIN_SPEED_EACH_AXIS = 0.00001f;
 const float Ball::RADIUS = 0.02f;
 
 Ball::Ball(void)
 {
-	xPos = 0.0f;
-	yPos = 0.0f;
+	xPos_ = 0.0f;
+	yPos_ = 0.0f;
 	setSpeed(0.4f, -0.5f);
 }
 
@@ -14,42 +15,52 @@ Ball::~Ball(void)
 {
 }
 
-int Ball::move(void)
+GameState Ball::move(void)
 {
-	xPos += xSpd;
-	yPos += ySpd;
+	xPos_ += xSpd_;
+	yPos_ += ySpd_;
 
 	//Checks if the ball is out of bounds on the X axis
-	if(!(xPos - RADIUS > -1 && xPos + RADIUS < 1))
+	if(!(xPos_ - RADIUS > -1 && xPos_ + RADIUS < 1))
 	{
-		xSpd = -xSpd;	//Speed along X axis is inverted
+		xSpd_ = -xSpd_;	//Speed along X axis is inverted
 	}
 
-	if(yPos + RADIUS >= 1) {
-		return gameState::PLAYER1_WINS;
+	if(yPos_ + RADIUS >= 1) {
+		return GameState::PLAYER1_WINS;
 	}
-	else if(yPos - RADIUS <= -1) {
-		gameState::PLAYER2_WINS;
+	else if(yPos_ - RADIUS <= -1) {
+		GameState::PLAYER2_WINS;
 	}
 	else {
-		return gameState::NOT_OVER;
+		return GameState::NOT_OVER;
 	}
 }
 
 //Checks if the resulting speed will surpass the maximum speed, if it does, will limit it to the maximum speed and maintain proportion between speeds along both axes
 void Ball::setSpeed(float newXSpeed, float newYSpeed) {
-	float totalSpeed = sqrt(pow(newXSpeed, 2) + pow(newYSpeed, 2));
+	float totalSpeed;
+
+	if (abs(newXSpeed) < MIN_SPEED_EACH_AXIS) {
+		newXSpeed = newXSpeed >= 0 ? MIN_SPEED_EACH_AXIS : -MIN_SPEED_EACH_AXIS;
+	}
+	if (abs(newYSpeed) < MIN_SPEED_EACH_AXIS) {
+		newYSpeed = newYSpeed >= 0? MIN_SPEED_EACH_AXIS : -MIN_SPEED_EACH_AXIS;
+	}
+
+	totalSpeed = sqrt(pow(newXSpeed, 2) + pow(newYSpeed, 2));
+
 	if(totalSpeed > MAX_SPEED)
 	{
 		float cosDelta = newXSpeed/totalSpeed;
 		float sinDelta = newYSpeed/totalSpeed;
-		xSpd = MAX_SPEED * cosDelta;
-		ySpd = MAX_SPEED * sinDelta;
+		xSpd_ = MAX_SPEED * cosDelta;
+		ySpd_ = MAX_SPEED * sinDelta;
 	}
 	else
 	{
-		xSpd = newXSpeed;
-		ySpd = newYSpeed;
+		xSpd_ = newXSpeed;
+		ySpd_ = newYSpeed;
 	}
 }
 
@@ -60,11 +71,11 @@ void Ball::draw() {
 
 	glBegin(GL_TRIANGLE_FAN);
 	glColor3f(1, 0, 0);
-	glVertex2d(xPos, yPos); // center of circle
+	glVertex2d(xPos_, yPos_); // center of circle
 	for(int i = 0; i <= triangleAmount;i++) { 
 		glVertex2d(
-			xPos + (RADIUS * cos(i *  twicePi / triangleAmount)), 
-			yPos + (RADIUS * sin(i * twicePi / triangleAmount))
+			xPos_ + (RADIUS * cos(i *  twicePi / triangleAmount)), 
+			yPos_ + (RADIUS * sin(i * twicePi / triangleAmount))
 			);
 	}
 	glEnd();
@@ -79,10 +90,10 @@ void Ball::detectCollision(Bar bar) {
 	barY1 = bar.getY() - bar.HALF_HEIGHT;
 	barY2 = bar.getY() + bar.HALF_HEIGHT;
 
-	ballX1 = this->xPos - RADIUS;
-	ballX2 = this->xPos + RADIUS;
-	ballY1 = this->yPos - RADIUS;
-	ballY2 = this->yPos + RADIUS;
+	ballX1 = this->xPos_ - RADIUS;
+	ballX2 = this->xPos_ + RADIUS;
+	ballY1 = this->yPos_ - RADIUS;
+	ballY2 = this->yPos_ + RADIUS;
 
 	//Ball's sides are between the bar's left and right sides
 	if(ballX1 > barX1 && ballX2 < barX2) {
@@ -90,7 +101,7 @@ void Ball::detectCollision(Bar bar) {
 		if((ballY1 > barY1 && ballY1 < barY2) ||
 			(ballY2 > barY1 && ballY2 < barY2)) 
 		{
-			this->ySpd = -this->ySpd;
+			this->ySpd_ = -this->ySpd_;
 		}
 		return;
 	}
@@ -101,7 +112,7 @@ void Ball::detectCollision(Bar bar) {
 		if((ballX2 > barX1 && ballX2 < barX2) ||
 			(ballX1 < barX2 && ballX1 > barX1)) 
 		{
-			this->xSpd = -this->xSpd;
+			this->xSpd_ = -this->xSpd_;
 		}
 		return;
 	}
@@ -113,19 +124,19 @@ void Ball::detectCollision(Bar bar) {
 		(ballY1 < barY2 && ballX2 > barY2)))
 	{
 		if(ballX1 < barX1 && ballX2 > barX1) {//Corner on the left
-			if(xSpd < 0) {
-				setSpeed(xSpd * 1.5, -ySpd * 0.8f);
+			if(xSpd_ < 0) {
+				setSpeed(xSpd_ * 1.5f, -ySpd_ * 0.8f);
 			}
 			else {
-				setSpeed(-xSpd * 0.8, -ySpd * 0.8f);
+				setSpeed(-xSpd_ * 0.8f, -ySpd_ * 0.8f);
 			}
 		}
 		else if(ballX1 < barX2 && ballX2 > barX2) {//Corner on the right
-			if(xSpd > 0) {
-				setSpeed(xSpd * 1.5, -ySpd * 0.8f);
+			if(xSpd_ > 0) {
+				setSpeed(xSpd_ * 1.5f, -ySpd_ * 0.8f);
 			}
 			else {
-				setSpeed(-xSpd * 0.8, -ySpd * 0.8f);
+				setSpeed(-xSpd_ * 0.8f, -ySpd_ * 0.8f);
 			}
 		}
 		return;

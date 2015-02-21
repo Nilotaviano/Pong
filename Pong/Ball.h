@@ -3,27 +3,23 @@
 #include <math.h>
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
+#include "GameState.h"
 
 class Ball
 {
 public:
-	enum gameState
-	{
-		PLAYER1_WINS = 1,
-		PLAYER2_WINS = -1,
-		NOT_OVER = 0
-	};
 	Ball(void);
 	~Ball(void);
-	int move(void);
+	GameState move(void);
 	void draw();
 	void detectCollision(Bar bar);
 private:
-	float xPos;
-	float yPos;
-	float ySpd;
-	float xSpd;
+	float xPos_;
+	float yPos_;
+	float ySpd_;
+	float xSpd_;
 	static const float MAX_SPEED;
+	static const float MIN_SPEED_EACH_AXIS;
 	static const float RADIUS;
 	void setSpeed(float newXSpeed, float newYSpeed);
 };

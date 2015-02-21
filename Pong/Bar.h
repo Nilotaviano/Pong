@@ -3,7 +3,6 @@ class Bar
 {
 public:
 	Bar(float xPosition, float yPosition);
-	Bar();
 	~Bar(void);
 	static const float HALF_WIDTH;
 	static const float HALF_HEIGHT;
@@ -14,7 +13,7 @@ public:
 	float getY();
 private:
 	static const float STEP;
-	float xPos;
-	float yPos;
+	float xPos_;
+	float yPos_;
 };
 
