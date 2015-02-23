@@ -12,8 +12,9 @@ class PlayState :
 public:
 	~PlayState();
 	void update(InputHandler inputHandler);
-	void render();
+	void draw();
 	static PlayState* getInstance(StateManager* pManager);
+	void leaveState();
 
 protected:
 	PlayState(StateManager* pManager);
@@ -21,8 +22,5 @@ private:
 	Ball ball;
 	Bar bar1;
 	Bar bar2;
-	bool quit;
-
-	InputHandler inputHandler;	
 };
 

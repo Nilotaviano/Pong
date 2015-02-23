@@ -1,7 +1,7 @@
 #include "Game.h"
 #include "PlayState.h"
 #include <stdio.h>
-
+#include "font.h"
 
 Game::Game()
 : pSdlWindow_(nullptr), quit(false),
@@ -13,7 +13,7 @@ SCREEN_WIDTH(640), SCREEN_HEIGHT(480)
 
 Game::~Game()
 {
-
+	delete(pStateManager_);
 }
 
 bool Game::init()
@@ -76,6 +76,9 @@ bool Game::initGL()
 	bool success = true;
 	GLenum error = GL_NO_ERROR;
 
+	glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+
 	//Initialize Projection Matrix
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -129,15 +132,12 @@ void Game::update()
 	pStateManager_->update(inputHandler_);
 }
 
-void Game::render()
+void Game::draw()
 {
-	pStateManager_->render();
-
-	glFlush();
+	pStateManager_->draw();
 }
 
 void Game::run() {
-
 	if (!init())
 	{
 		printf("Failed to initialize!\n");
@@ -155,7 +155,7 @@ void Game::run() {
 			}
 
 			update();
-			render();
+			draw();
 
 			//Update screen
 			SDL_GL_SwapWindow(pSdlWindow_);

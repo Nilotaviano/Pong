@@ -27,13 +27,13 @@ GamePlayState Ball::move(void)
 	}
 
 	if (yPos_ + RADIUS >= 1) {
-		return GamePlayState::PLAYER1_WINS;
+		return PLAYER1_WINS;
 	}
 	else if (yPos_ - RADIUS <= -1) {
-		GamePlayState::PLAYER2_WINS;
+		PLAYER2_WINS;
 	}
 	else {
-		return GamePlayState::NOT_OVER;
+		return NOT_OVER;
 	}
 }
 

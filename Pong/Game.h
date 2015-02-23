@@ -9,7 +9,7 @@ public:
 	Game();
 	~Game();
 	void update();
-	void render();
+	void draw();
 	void run();
 private:
 	bool init();

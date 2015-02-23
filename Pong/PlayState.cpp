@@ -1,13 +1,13 @@
 #include "PlayState.h"
 #include <SDL.h>
 #include <SDL_opengl.h>
+#include "GameOverState.h"
 #include "EnumGamePlayState.h"
 
 PlayState::PlayState(StateManager* pManager)
 :GameState(pManager),
 bar1(0.0f, -0.90f), bar2(0.0f, 0.90f)
 {
-	quit = false;
 }
 
 PlayState::~PlayState()
@@ -35,12 +35,29 @@ void PlayState::update(InputHandler inputHandler)
 	}
 
 	gamePlayState = ball.move();
+
+	if (gamePlayState != NOT_OVER) {
+		GameOverState* gameOverState = GameOverState::getInstance(pStateManager_);
+		if (gamePlayState == PLAYER1_WINS) {
+			gameOverState->setWinner(PLAYER_1);
+		}
+		else {
+			gameOverState->setWinner(PLAYER_2);
+		}
+		pStateManager_->changeState(gameOverState);
+	}
 }
 
-void PlayState::render()
+void PlayState::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	ball.draw();
 	bar1.draw();
 	bar2.draw();
+}
+
+void PlayState::leaveState() {
+	ball = Ball::Ball();
+	bar1 = Bar::Bar(0.0f, -0.90f);
+	bar2 = Bar::Bar(0.0f, 0.90f);
 }

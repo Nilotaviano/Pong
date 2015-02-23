@@ -9,10 +9,11 @@ class GameState
 public:
 	GameState(StateManager* pManager);
 	~GameState();
-	virtual void render() {}
+	virtual void draw() {}
 	virtual void update(InputHandler inputHandler) {}
 	void changeState(GameState* pNewGameState);
+	virtual void leaveState() {}
 
-private :
+protected:
 	StateManager* pStateManager_;
 };

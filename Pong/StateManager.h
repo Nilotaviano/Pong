@@ -9,7 +9,7 @@ public:
 	~StateManager();
 
 	void update(InputHandler inputHandler);
-	void render();
+	void draw();
 	void changeState(GameState* pNewState);
 	GameState* getActiveState() { return pActiveState_; }
 

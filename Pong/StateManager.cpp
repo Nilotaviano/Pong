@@ -14,6 +14,9 @@ StateManager::~StateManager()
 
 void StateManager::changeState(GameState* pNewGameState) 
 {
+	if (pActiveState_ != nullptr) {
+		pActiveState_->leaveState();
+	}
 	pActiveState_ = pNewGameState;
 }
 
@@ -25,9 +28,9 @@ void StateManager::update(InputHandler inputHandler)
 
 }
 
-void StateManager::render() 
+void StateManager::draw() 
 {
 	if (pActiveState_) {
-		pActiveState_->render();
+		pActiveState_->draw();
 	}
 }
