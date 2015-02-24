@@ -7,7 +7,7 @@ Game::Game()
 : pSdlWindow_(nullptr), quit(false),
 SCREEN_WIDTH(640), SCREEN_HEIGHT(480)
 {
-	pStateManager_ = new StateManager();
+	pStateManager_ = new StateManager(&quit);
 	pStateManager_->changeState(PlayState::getInstance(pStateManager_));
 }
 
