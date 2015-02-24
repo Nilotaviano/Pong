@@ -14,7 +14,8 @@ protected:
 	MenuState(StateManager* pManager);
 private:
 	Button playButton_;
-	Button optionsButton;
-	Button quitButton;
+	Button optionsButton_;
+	Button quitButton_;
+	timeBuffer_;
 };
 
