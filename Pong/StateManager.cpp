@@ -1,9 +1,11 @@
-#include "StateManager.h"
+﻿#include "StateManager.h"
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
 
-StateManager::StateManager() : pActiveState_(NULL)
+StateManager::StateManager(bool* quit) 
+: pActiveState_(NULL),
+bool* quit_(quit)
 {
 }
 
