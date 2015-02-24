@@ -11,6 +11,7 @@ public:
 	void update(InputHandler inputHandler, int interval);
 	void draw();
 	void changeState(GameState* pNewState);
+	void quit();
 	GameState* getActiveState() { return pActiveState_; }
 private:
 	GameState* pActiveState_;
