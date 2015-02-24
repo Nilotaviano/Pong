@@ -37,7 +37,7 @@ void StateManager::draw()
 	}
 }
 
-void quit() 
+void StateManager::quit() 
 {
 	*quit_ = true;
 }
