@@ -12,5 +12,9 @@ public:
 	void draw();
 protected:
 	MenuState(StateManager* pManager);
+private:
+	Button playButton_;
+	Button optionsButton;
+	Button quitButton;
 };
 
