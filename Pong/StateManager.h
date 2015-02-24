@@ -5,7 +5,7 @@
 class StateManager
 {
 public:
-	StateManager();
+	StateManager(bool* quit);
 	~StateManager();
 
 	void update(InputHandler inputHandler, int interval);
