@@ -36,3 +36,8 @@ void StateManager::draw()
 		pActiveState_->draw();
 	}
 }
+
+void quit() 
+{
+	*quit_ = true;
+}
