@@ -1,4 +1,4 @@
-#include "Game.h"
+﻿#include "Game.h"
 #include "PlayState.h"
 #include <stdio.h>
 #include "font.h"
@@ -129,7 +129,7 @@ void Game::close()
 
 void Game::update() 
 {
-	pStateManager_->update(inputHandler_, currentFrameTime - previousFrameTime);
+	pStateManager_->update(inputHandler_, currentFrameTime - previousFrameTime, &quit);
 }
 
 void Game::draw()
