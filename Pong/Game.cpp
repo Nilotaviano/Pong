@@ -129,7 +129,7 @@ void Game::close()
 
 void Game::update() 
 {
-	pStateManager_->update(inputHandler_);
+	pStateManager_->update(inputHandler_, currentFrameTime - previousFrameTime);
 }
 
 void Game::draw()
@@ -145,6 +145,8 @@ void Game::run() {
 	else
 	{
 		SDL_Event event;
+		currentFrameTime = SDL_GetTicks();
+		previousFrameTime = currentFrameTime;
 
 		while (!quit)
 		{
@@ -154,8 +156,12 @@ void Game::run() {
 				inputHandler_.handleInput(event, &quit);
 			}
 
-			update();
-			draw();
+			if (SDL_GetTicks() - previousFrameTime > 0) {
+				currentFrameTime = SDL_GetTicks();
+				update();
+				draw();
+				previousFrameTime = currentFrameTime;
+			}
 
 			//Update screen
 			SDL_GL_SwapWindow(pSdlWindow_);

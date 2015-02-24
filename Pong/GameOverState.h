@@ -4,7 +4,6 @@
 #include "Button.h"
 #include <list>
 
-using std::list;
 
 typedef enum Winner {PLAYER_1, PLAYER_2};
 
@@ -13,7 +12,7 @@ class GameOverState :
 {
 public:
 	~GameOverState();
-	void update(InputHandler inputHandler);
+	void update(InputHandler inputHandler, int interval);
 	void draw();
 	static GameOverState* getInstance(StateManager* pManager);
 	void setWinner(Winner winner);
@@ -25,6 +24,5 @@ private:
 	Font messageFont_;
 	Button menuButton_;
 	Button playAgainButton_;
-	list<Button> buttons;
-	std::list<Button>::iterator current;
+	int timeBuffer;
 };

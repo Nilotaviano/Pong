@@ -11,7 +11,7 @@ class PlayState :
 {
 public:
 	~PlayState();
-	void update(InputHandler inputHandler);
+	void update(InputHandler inputHandler, int interval);
 	void draw();
 	static PlayState* getInstance(StateManager* pManager);
 	void leaveState();

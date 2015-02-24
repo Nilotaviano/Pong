@@ -7,7 +7,7 @@
 
 const float Bar::HALF_WIDTH = 0.1f;
 const float Bar::HALF_HEIGHT = 0.025f;
-const float Bar::STEP = 0.00025f;
+const float Bar::STEP = 0.001f;
 
 
 Bar::Bar(float xPosition, float yPosition)
@@ -23,20 +23,24 @@ Bar::~Bar(void)
 }
 
 
-void Bar::moveLeft(void)
+void Bar::moveLeft(int times)
 {
 	//Can't go out of the screen
-	if(xPos_ > -1 + HALF_WIDTH) {
-		xPos_ -= STEP;
+	for (int i = 0; i < times; i++) {
+		if (xPos_ > -1 + HALF_WIDTH) {
+			xPos_ -= STEP;
+		}
 	}
 }
 
 
-void Bar::moveRight(void)
+void Bar::moveRight(int times)
 {
 	//Can't go out of the screen
-	if(xPos_ < 1 - HALF_WIDTH) {
-		xPos_ += STEP;
+	for (int i = 0; i < times; i++) {
+		if (xPos_ < 1 - HALF_WIDTH) {
+			xPos_ += STEP;
+		}
 	}
 }
 

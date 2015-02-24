@@ -1,7 +1,7 @@
 #include "Ball.h"
 
-const float Ball::MAX_SPEED = 0.00005f;
-const float Ball::MIN_SPEED_EACH_AXIS = 0.00001f;
+const float Ball::MAX_SPEED = 0.0006f;
+const float Ball::MIN_SPEED_EACH_AXIS = 0.0001f;
 const float Ball::RADIUS = 0.02f;
 
 Ball::Ball(void)
@@ -15,7 +15,7 @@ Ball::~Ball(void)
 {
 }
 
-GamePlayState Ball::move(void)
+GamePlayState Ball::move(int times)
 {
 	xPos_ += xSpd_;
 	yPos_ += ySpd_;

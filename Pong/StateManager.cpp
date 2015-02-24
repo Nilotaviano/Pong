@@ -20,10 +20,10 @@ void StateManager::changeState(GameState* pNewGameState)
 	pActiveState_ = pNewGameState;
 }
 
-void StateManager::update(InputHandler inputHandler)
+void StateManager::update(InputHandler inputHandler, int interval)
 {
 	if (pActiveState_) {
-		pActiveState_->update(inputHandler);
+		pActiveState_->update(inputHandler, interval);
 	}
 
 }

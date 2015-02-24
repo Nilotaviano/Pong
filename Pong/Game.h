@@ -21,4 +21,6 @@ private:
 	StateManager* pStateManager_;
 	InputHandler inputHandler_;
 	bool quit;
+	int previousFrameTime;
+	int currentFrameTime;
 };

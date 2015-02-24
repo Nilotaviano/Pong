@@ -20,7 +20,7 @@
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MenuState.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="main.cpp" />
@@ -34,7 +34,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameOverState.h" />
     <ClInclude Include="MenuState.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="EnumGamePlayState.h" />

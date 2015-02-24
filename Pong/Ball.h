@@ -10,7 +10,7 @@ class Ball
 public:
 	Ball(void);
 	~Ball(void);
-	GamePlayState move(void);
+	GamePlayState move(int times);
 	void draw();
 	void detectCollision(Bar bar);
 private:

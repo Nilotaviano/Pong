@@ -8,7 +8,7 @@ public:
 	StateManager();
 	~StateManager();
 
-	void update(InputHandler inputHandler);
+	void update(InputHandler inputHandler, int interval);
 	void draw();
 	void changeState(GameState* pNewState);
 	GameState* getActiveState() { return pActiveState_; }

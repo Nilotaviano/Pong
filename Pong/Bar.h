@@ -6,8 +6,8 @@ public:
 	~Bar(void);
 	static const float HALF_WIDTH;
 	static const float HALF_HEIGHT;
-	void moveLeft(void);
-	void moveRight(void);
+	void moveLeft(int times);
+	void moveRight(int times);
 	void draw();
 	float getX();
 	float getY();

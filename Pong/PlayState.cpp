@@ -21,20 +21,20 @@ PlayState* PlayState::getInstance(StateManager* pManager)
 	return &Instance;
 }
 
-void PlayState::update(InputHandler inputHandler)
+void PlayState::update(InputHandler inputHandler, int interval)
 {
 	GamePlayState gamePlayState;
 	ball.detectCollision(bar1);
 	ball.detectCollision(bar2);
 
 	if (inputHandler.isKeyPressed(SDLK_a)) {
-		bar1.moveLeft();
+		bar1.moveLeft(interval);
 	}
 	if (inputHandler.isKeyPressed(SDLK_d)) {
-		bar1.moveRight();
+		bar1.moveRight(interval);
 	}
 
-	gamePlayState = ball.move();
+	gamePlayState = ball.move(interval);
 
 	if (gamePlayState != NOT_OVER) {
 		GameOverState* gameOverState = GameOverState::getInstance(pStateManager_);
