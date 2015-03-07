@@ -5,7 +5,7 @@
 
 StateManager::StateManager(bool* quit) 
 : pActiveState_(NULL),
-bool* quit_(quit)
+quit_(quit)
 {
 }
 
@@ -20,6 +20,7 @@ void StateManager::changeState(GameState* pNewGameState)
 		pActiveState_->leaveState();
 	}
 	pActiveState_ = pNewGameState;
+  pActiveState_->enterState();
 }
 
 void StateManager::update(InputHandler inputHandler, int interval)

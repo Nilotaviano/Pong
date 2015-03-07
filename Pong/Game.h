@@ -14,10 +14,11 @@ public:
 private:
 	bool init();
 	bool initGL();
+  void resize();
 	void close();
 	const int SCREEN_WIDTH;
 	const int SCREEN_HEIGHT;
-	SDL_Window* pSdlWindow_;
+	SDL_Window* pSDLWindow_;
 	StateManager* pStateManager_;
 	InputHandler inputHandler_;
 	bool quit;

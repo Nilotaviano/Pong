@@ -24,5 +24,5 @@ private:
 	Font messageFont_;
 	Button menuButton_;
 	Button playAgainButton_;
-	int timeBuffer;
+	int timeBuffer_;
 };

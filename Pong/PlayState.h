@@ -14,7 +14,7 @@ public:
 	void update(InputHandler inputHandler, int interval);
 	void draw();
 	static PlayState* getInstance(StateManager* pManager);
-	void leaveState();
+  void enterState();
 
 protected:
 	PlayState(StateManager* pManager);

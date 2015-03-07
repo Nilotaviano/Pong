@@ -43,7 +43,7 @@ void Button::draw() {
 			y_ + height_ + outLineOffSet);
 	}
 
-	glColor3i(color_.r, color_.g, color_.b);
+  glColor3ub(color_.r, color_.g, color_.b);
 	glRectf(
 		x_,
 		y_,

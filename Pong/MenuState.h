@@ -1,21 +1,25 @@
 ﻿#pragma once
 #include "GameState.h"
 
+#include "Button.h"
+
 class MenuState :
 	public GameState
 {
 public:
 	~MenuState();
 	static MenuState* getInstance(StateManager* pManager);
-	void leaveState();
+  void enterState();
 	void update(InputHandler inputHandler, int interval);
 	void draw();
+  void resize();
+
 protected:
 	MenuState(StateManager* pManager);
 private:
 	Button playButton_;
 	Button optionsButton_;
 	Button quitButton_;
-	timeBuffer_;
+  int timeBuffer_;
 };
 

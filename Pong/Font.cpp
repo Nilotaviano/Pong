@@ -18,9 +18,10 @@ int nextpoweroftwo(int x)
 
 Font::Font(char* text, int size, char* fontpath, float x, float y, int r, int g, int b) :
 size_(size),
-text_(text)
+text_(text),
+x_(x),
+y_(y)
 {
-	int vPort[4];
 	if (TTF_Init())
 		printf(TTF_GetError());
 	atexit(TTF_Quit);
@@ -29,24 +30,15 @@ text_(text)
 		printf("Error loading font_: %s", TTF_GetError());
 	}
 
-	glGetIntegerv(GL_VIEWPORT, vPort);
-	screenWidth_ = vPort[2];
-	screenHeight_ = vPort[3];
-
-	x_ = (int)x >= 0 ?
-		screenWidth_ / 2 + x * screenWidth_ / 2 :
-		screenWidth_ / 2 - x * screenWidth_ / 2;
-	y_ = (int)y >= 0 ?
-		screenHeight_ / 2 + y * screenHeight_ / 2 :
-		screenHeight_ / 2 - y * screenHeight_ / 2;
-
 	color_.r = r;
 	color_.g = g;
 	color_.b = b;
 }
 
 Font::Font(int size, char* fontpath, float x, float y, int r, int g, int b) :
-size_(size)
+size_(size),
+x_(x),
+y_(y)
 {
 	int vPort[4];
 
@@ -62,13 +54,6 @@ size_(size)
 	glGetIntegerv(GL_VIEWPORT, vPort);
 	screenWidth_ = vPort[2];
 	screenHeight_ = vPort[3];
-
-	x_ = (int)x >= 0 ?
-		screenWidth_ / 2 + x * screenWidth_ / 2 :
-		screenWidth_ / 2 - x * screenWidth_ / 2;
-	y_ = (int)y >= 0 ?
-		screenHeight_ / 2 + y * screenHeight_ / 2 :
-		screenHeight_ / 2 - y * screenHeight_ / 2;
 
 	color_.r = r;
 	color_.g = g;
@@ -113,8 +98,15 @@ void Font::SDL_GL_RenderText()
 {
 	SDL_Surface *initial;
 	SDL_Surface *intermediary;
-	int w, h;
+	int X, Y, w, h;
 	int texture;
+
+  X = (int)x_ >= 0 ?
+    screenWidth_ / 2 + x_ * screenWidth_ / 2 :
+    screenWidth_ / 2 - x_ * screenWidth_ / 2;
+  Y = (int)y_ >= 0 ?
+    screenHeight_ / 2 + y_ * screenHeight_ / 2 :
+    screenHeight_ / 2 - y_ * screenHeight_ / 2;
 
 	/* Use SDL_TTF to draw our text */
 	initial = TTF_RenderText_Blended(font_, text_, color_);
@@ -156,13 +148,13 @@ void Font::SDL_GL_RenderText()
 	That is why the TexCoords specify different corners
 	than the Vertex coors seem to. */
 	glTexCoord2f(0.0f, 1.0f);
-	glVertex2f(x_ - w/2, y_ - h/2);
+	glVertex2f(X - w/2, Y - h/2);
 	glTexCoord2f(1.0f, 1.0f);
-	glVertex2f(x_ + w/2, y_ - h/2);
+	glVertex2f(X + w/2, Y - h/2);
 	glTexCoord2f(1.0f, 0.0f);
-	glVertex2f(x_ + w/2, y_ + h/2);
+	glVertex2f(X + w/2, Y + h/2);
 	glTexCoord2f(0.0f, 0.0f);
-	glVertex2f(x_ - w/2, y_ + h/2);
+	glVertex2f(X - w/2, Y + h/2);
 	glEnd();
 
 	/* Bad things happen if we delete the texture before it finishes */
@@ -179,8 +171,6 @@ void Font::glEnable2D()
 	int vPort[4];
 
 	glGetIntegerv(GL_VIEWPORT, vPort);
-
-	//printf("x: %i\ny: %i\nw: %i\nh: %i\n", vPort[0], vPort[1], vPort[2], vPort[3]);
 
 	screenWidth_ = vPort[2];
 	screenHeight_ = vPort[3];
@@ -212,14 +202,6 @@ void Font::draw(float x, float y, int r, int g, int b)
 	color_.r = 0;
 	color_.g = 0;
 	color_.b = 0;
-
-	x_ = (int) x >= 0 ? 
-		screenWidth_ / 2 + x * screenWidth_ / 2 : 
-		screenWidth_ / 2 - x * screenWidth_ / 2;
-	y_ = (int) y >= 0 ? 
-		screenHeight_ / 2 + y * screenHeight_ / 2 : 
-		screenHeight_ / 2 - y * screenHeight_ / 2;
-
 
 	SDL_GL_RenderText();
 

@@ -56,8 +56,8 @@ void PlayState::draw()
 	bar2.draw();
 }
 
-void PlayState::leaveState() {
-	ball = Ball::Ball();
-	bar1 = Bar::Bar(0.0f, -0.90f);
-	bar2 = Bar::Bar(0.0f, 0.90f);
+void PlayState::enterState(){
+  ball = Ball::Ball();
+  bar1 = Bar::Bar(0.0f, -0.90f);
+  bar2 = Bar::Bar(0.0f, 0.90f);
 }

@@ -13,6 +13,7 @@ public:
 	virtual void update(InputHandler inputHandler, int interval) {}
 	void changeState(GameState* pNewGameState);
 	virtual void leaveState() {}
+  virtual void enterState() {}
 
 protected:
 	StateManager* pStateManager_;
