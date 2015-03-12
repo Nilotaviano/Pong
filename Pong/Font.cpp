@@ -5,15 +5,10 @@
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
 
-int round(double x)
-{
-	return (int)(x + 0.5);
-}
-
 int nextpoweroftwo(int x)
 {
-	double logbase2 = log((float)x) / log(2.0f);
-	return round(pow(2, ceil(logbase2)));
+	float logbase2 = log((float)x) / log(2.0f);
+	return (int) round(pow(2, ceil(logbase2)));
 }
 
 Font::Font(char* text, int size, char* fontpath, float x, float y, int r, int g, int b) :

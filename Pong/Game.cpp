@@ -189,11 +189,11 @@ void Game::run() {
 				currentFrameTime = SDL_GetTicks();
 				update();
 				draw();
-				previousFrameTime = currentFrameTime;
 			}
 
 			//Update screen
 			SDL_GL_SwapWindow(pSDLWindow_);
+      previousFrameTime = currentFrameTime;
 		}
 	}
 

@@ -17,8 +17,9 @@ Ball::~Ball(void)
 
 GamePlayState Ball::move(int times)
 {
-	xPos_ += xSpd_;
-	yPos_ += ySpd_;
+  //TODO make it better
+	xPos_ += xSpd_ * times;
+  yPos_ += ySpd_ * times;
 
 	//Checks if the ball is out of bounds on the X axis
 	if (!(xPos_ - RADIUS > -1 && xPos_ + RADIUS < 1))
